@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AddForm</title>
+</head>
+<body>
+<h1><span th:text="${Title}"></span></h1>
+<div class="container text-center">
+    <form method="POST">
+        <input type="hidden" name="id" th:value="${user.id}">
+        <label path="name">Name</label>
+        <input name="name" th:value="${user.name}" />
+
+        <label path="surname">Surname</label>
+        <input name="surname" th:value="${user.lastName}"/>
+
+        <label path="age">Age</label>
+        <input name="age" th:value="${user.age}"/>
+
+        <label path="password">Password</label>
+        <input name="password" th:value="${user.password}"/>
+        <input type="submit" value="Add" />
+    </form>
+</div>
+</body>
+</html>
