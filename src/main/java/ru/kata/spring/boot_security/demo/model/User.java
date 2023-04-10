@@ -5,9 +5,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import ru.kata.spring.boot_security.demo.configs.WebSecurityConfig;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
+
 
 @Entity
 @Table(name = "user")
@@ -100,7 +99,9 @@ public class User implements UserDetails {
     }
 
     public void setPassword(String password) {
-        this.password = WebSecurityConfig.passwordEncoder().encode(password);
+        if (!Objects.equals(password, this.password)) {
+            this.password = WebSecurityConfig.passwordEncoder().encode(password);
+        }
     }
 
     public Set<Role> getRoles() {
@@ -137,13 +138,16 @@ public class User implements UserDetails {
     }
 
     public boolean isAdmin() {
-        for (Role role : roles) {
-            if (role.getRoleName().equals("ROLE_ADMIN")) {
-                return true;
-            }
-        }
-        return false;
+        return hasRole(new Role("ROLE_ADMIN"));
     }
+     public boolean hasRole(Role role){
+         for (Role userRole : roles) {
+             if (userRole.getRoleName().equals(role.getRoleName())) {
+                 return true;
+             }
+         }
+         return false;
+     }
 
     @Override
     public boolean equals(Object o) {

@@ -49,5 +49,6 @@ public class DBInit {
     @PreDestroy
     public void preDestroy() {
         userRepository.deleteAll();
+        roleRepository.deleteAll();
     }
 }

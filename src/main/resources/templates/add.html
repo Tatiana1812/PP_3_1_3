@@ -20,6 +20,13 @@
 
         <label path="password">Password</label>
         <input name="password" th:value="${user.password}"/>
+
+        <label path="role">Role</label>
+        <select  name="roles" multiple="multiple">
+            <option th:each="role : ${roles}"
+                    th:value="${role.getId()}" th:selected="${user.hasRole(role)}" th:text="${role.getRoleName()}">
+            </option>
+        </select>
         <input type="submit" value="Add" />
     </form>
 </div>
