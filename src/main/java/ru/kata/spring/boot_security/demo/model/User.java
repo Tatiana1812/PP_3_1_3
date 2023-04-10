@@ -6,6 +6,7 @@ import ru.kata.spring.boot_security.demo.configs.WebSecurityConfig;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Set;
 
 @Entity
@@ -135,6 +136,15 @@ public class User implements UserDetails {
         return false;
     }
 
+    public boolean isAdmin() {
+        for (Role role : roles) {
+            if (role.getRoleName().equals("ROLE_ADMIN")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -147,7 +157,6 @@ public class User implements UserDetails {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        ;
         result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;
     }
