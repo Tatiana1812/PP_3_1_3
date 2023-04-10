@@ -19,34 +19,39 @@ import java.util.stream.Collectors;
 public class UserServiceImp implements UserService, UserDetailsService {
 
     private UserRepository userRepository;
+
     @Autowired
-    public void setUserRepository(UserRepository userRepository){
-        this.userRepository=userRepository;
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
-    public User findByUsername(String username){
+
+    public User findByUsername(String username) {
         return userRepository.findByName(username);
     }
+
     public List<User> getAll() {
         return userRepository.findAll();
     }
 
-    public void add(User user){
-        if(userRepository.findByName(user.getName()) == null) {
+    public void add(User user) {
+        if (userRepository.findByName(user.getName()) == null) {
             userRepository.save(user);
         }
     }
 
     @Override
-    public void delete(Long id){
+    public void delete(Long id) {
         userRepository.deleteById(id);
     }
-    public User getUserById(Long id){
+
+    public User getUserById(Long id) {
         return userRepository.getUserById(id);
     }
 
-    public void update(User user){
+    public void update(User user) {
         userRepository.save(user);
     }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByUsername(username);

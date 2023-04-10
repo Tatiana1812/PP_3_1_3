@@ -1,14 +1,11 @@
 package ru.kata.spring.boot_security.demo.model;
 
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.kata.spring.boot_security.demo.configs.WebSecurityConfig;
-import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -20,7 +17,7 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name",unique = true)
+    @Column(name = "name", unique = true)
     private String name;
 
     @Column(name = "lastName")
@@ -28,30 +25,35 @@ public class User implements UserDetails {
 
     @Column(name = "age")
     private int age;
-    @Column(name="password")
+    @Column(name = "password")
     private String password;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
-    public User() {}
+
+    public User() {
+    }
+
     public User(String name, String lastName, int age) {
         this.name = name;
         this.lastName = lastName;
         this.age = age;
     }
-    public User(String name, String lastName, int age,String password) {
+
+    public User(String name, String lastName, int age, String password) {
         this.name = name;
         this.lastName = lastName;
         this.age = age;
         this.setPassword(password);
     }
-    public User(String name, String lastName, int age,String password,Set<Role>roles) {
+
+    public User(String name, String lastName, int age, String password, Set<Role> roles) {
         this.name = name;
         this.lastName = lastName;
         this.age = age;
         this.setPassword(password);
-        this.roles=roles;
+        this.roles = roles;
     }
 
     public Long getId() {
@@ -112,6 +114,7 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }
+
     @Override
     public boolean isAccountNonExpired() {
         return false;
@@ -143,7 +146,8 @@ public class User implements UserDetails {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        ;
         result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;
     }

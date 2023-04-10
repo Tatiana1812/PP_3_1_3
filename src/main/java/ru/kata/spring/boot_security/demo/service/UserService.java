@@ -1,22 +1,24 @@
 package ru.kata.spring.boot_security.demo.service;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import ru.kata.spring.boot_security.demo.model.Role;
+import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.User;
 
-import javax.transaction.Transactional;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
+@Transactional(readOnly = true)
 public interface UserService {
     User findByUsername(String username);
+
     List<User> getAll();
+
+    @Transactional
     void add(User user);
+
+    @Transactional
     void delete(Long id);
+
     User getUserById(Long id);
+
+    @Transactional
     void update(User user);
 }
