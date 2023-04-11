@@ -7,7 +7,9 @@ import java.util.Set;
 
 public interface RoleService {
     List<Role> getAll();
+
     Role getRoleById(Long id);
+
     Set<Role> getRolesById(List<Long> roles);
 
 }

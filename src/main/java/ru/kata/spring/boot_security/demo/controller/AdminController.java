@@ -40,14 +40,14 @@ public class AdminController {
         User newUser = new User();
         newUser.setRoles(new HashSet<>());
         model.put("user", newUser);
-        model.put("roles",roleService.getAll());
+        model.put("roles", roleService.getAll());
         return "add";
     }
 
     @PostMapping(value = "/add")
     public String addUser(@RequestParam String name, @RequestParam String surname,
                           @RequestParam int age, @RequestParam String password, @RequestParam List<Long> roles, ModelMap model) {
-        User newUser = new User(name, surname, age, password,roleService.getRolesById(roles));
+        User newUser = new User(name, surname, age, password, roleService.getRolesById(roles));
         userService.add(newUser);
         model.put("users", newUser);
         return "redirect:/admin";
@@ -62,7 +62,7 @@ public class AdminController {
     @GetMapping(value = "/edit")
     public String showEditUserForm(@RequestParam Long id, ModelMap model) {
         model.addAttribute("user", userService.getUserById(id));
-        model.put("roles",roleService.getAll());
+        model.put("roles", roleService.getAll());
         model.put("Title", "Edit user");
         return "add";
     }
@@ -70,13 +70,7 @@ public class AdminController {
     @PostMapping(value = "/edit")
     public String editUser(@RequestParam Long id, @RequestParam String name, @RequestParam String surname,
                            @RequestParam int age, @RequestParam String password, @RequestParam List<Long> roles, ModelMap model) {
-        User newUser = userService.getUserById(id);
-        newUser.setId(id);
-        newUser.setName(name);
-        newUser.setLastName(surname);
-        newUser.setAge(age);
-        newUser.setPassword(password);
-        newUser.setRoles(roleService.getRolesById(roles));
+        User newUser = new User(id, name, surname, age, password, roleService.getRolesById(roles));
         userService.update(newUser);
         return "redirect:/admin";
     }

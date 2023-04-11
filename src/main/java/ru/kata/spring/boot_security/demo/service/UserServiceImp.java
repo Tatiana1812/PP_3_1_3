@@ -27,14 +27,17 @@ public class UserServiceImp implements UserService, UserDetailsService {
         this.userRepository = userRepository;
     }
 
+    @Override
     public User findByUsername(String username) {
         return userRepository.findByName(username);
     }
 
+    @Override
     public List<User> getAll() {
         return userRepository.findAll();
     }
 
+    @Override
     @Transactional
     public void add(User user) {
         if (userRepository.findByName(user.getName()) == null) {
@@ -48,10 +51,12 @@ public class UserServiceImp implements UserService, UserDetailsService {
         userRepository.deleteById(id);
     }
 
+    @Override
     public User getUserById(Long id) {
         return userRepository.getUserById(id);
     }
 
+    @Override
     @Transactional
     public void update(User user) {
         userRepository.save(user);

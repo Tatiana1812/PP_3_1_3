@@ -42,18 +42,18 @@ public class User implements UserDetails {
     }
 
     public User(String name, String lastName, int age, String password) {
-        this.name = name;
-        this.lastName = lastName;
-        this.age = age;
+        this(name, lastName, age);
         this.setPassword(password);
     }
 
     public User(String name, String lastName, int age, String password, Set<Role> roles) {
-        this.name = name;
-        this.lastName = lastName;
-        this.age = age;
-        this.setPassword(password);
+        this(name, lastName, age, password);
         this.roles = roles;
+    }
+
+    public User(Long id, String name, String lastName, int age, String password, Set<Role> roles) {
+        this(name, lastName, age, password, roles);
+        this.setId(id);
     }
 
     public Long getId() {
@@ -140,14 +140,15 @@ public class User implements UserDetails {
     public boolean isAdmin() {
         return hasRole(new Role("ROLE_ADMIN"));
     }
-     public boolean hasRole(Role role){
-         for (Role userRole : roles) {
-             if (userRole.getRoleName().equals(role.getRoleName())) {
-                 return true;
-             }
-         }
-         return false;
-     }
+
+    public boolean hasRole(Role role) {
+        for (Role userRole : roles) {
+            if (userRole.getRoleName().equals(role.getRoleName())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Override
     public boolean equals(Object o) {
