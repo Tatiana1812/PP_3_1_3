@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class RoleServiceImp {
+public class RoleServiceImp implements RoleService {
     private RoleRepository roleRepository;
 
     @Autowired
@@ -18,15 +18,17 @@ public class RoleServiceImp {
         this.roleRepository = roleRepository;
     }
 
-
+    @Override
     public List<Role> getAll() {
         return roleRepository.findAll();
     }
 
+    @Override
     public Role getRoleById(Long id) {
         return roleRepository.getRoleById(id);
     }
 
+    @Override
     public Set<Role> getRolesById(List<Long> roles) {
         Set<Role> roleSet = new HashSet<>();
         for (Long role : roles) {
